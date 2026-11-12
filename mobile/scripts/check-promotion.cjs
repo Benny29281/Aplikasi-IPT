@@ -1,0 +1,18 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');const path=require('node:path');const ts=require('typescript');const {createRequire}=require('node:module');
+const root=path.resolve(__dirname,'..');
+const code=ts.transpileModule(fs.readFileSync(path.join(root,'src/utils/promotion.ts'),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
+const compiled={exports:{}};
+new Function('require','module','exports',code)(createRequire(path.join(root,'package.json')),compiled,compiled.exports);
+const {saleIsActive,salePrice,campaignState,countdown}=compiled.exports;
+const start=Date.parse('2026-12-12T10:00:00+07:00'),end=Date.parse('2026-12-12T11:00:00+07:00');
+const c={enabled:true,mode:'scheduled',starts_at:new Date(start).toISOString(),ends_at:new Date(end).toISOString()};
+assert.equal(campaignState(c,start-1),'scheduled');assert.equal(campaignState(c,start),'live');assert.equal(campaignState(c,end),'ended');
+assert.equal(campaignState({...c,mode:'preview'},start),'preview');assert.equal(campaignState({...c,enabled:false},start),'disabled');
+assert.deepEqual(countdown(c.ends_at,end),['00','00','00','00']);assert.deepEqual(countdown(c.ends_at,end+10000),['00','00','00','00']);
+assert.deepEqual(countdown(c.ends_at,end-90061000),['01','01','01','01']);
+const product={price:1001,sale_price:850,discount_percent:15,sale_ends_at:c.ends_at};
+assert.equal(saleIsActive(product,end-1),true);assert.equal(saleIsActive(product,end),false);
+assert.equal(salePrice(product,1001,end-1),850);assert.equal(salePrice(product,1001,end),1001);
+assert.equal(salePrice(product,2001,end-1),1700);assert.equal(salePrice({price:1001},1001,start),1001);
+console.log('PASS: campaign lifecycle, countdown boundaries, normal/sale/variant prices and integer rounding.');

@@ -1,0 +1,11 @@
+node_modules/
+.expo/
+.npm-cache/
+mobile/dist/
+mobile/.native-check/
+mobile/.env
+backend/.env
+backend/storage/*
+!backend/storage/.gitkeep
+.runtime/
+*.log

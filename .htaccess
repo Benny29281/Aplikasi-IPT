@@ -1,0 +1,6 @@
+Options -Indexes
+RewriteEngine On
+RewriteRule ^(backend|mobile|\.git|\.runtime|\.npm-cache)(/|$) - [F,L]
+RewriteRule ^(?:api|media|_expo)(?:/|$) index.php [QSA,L]
+RewriteRule ^assets/ index.php [QSA,L]
+RewriteRule ^$ index.php [L]

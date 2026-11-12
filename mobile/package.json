@@ -1,0 +1,35 @@
+{
+  "name": "ipt-store",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start",
+    "web": "expo start --web",
+    "build:web": "node scripts/build-web.cjs",
+    "check": "tsc --noEmit",
+    "check:i18n": "node scripts/check-i18n.cjs",
+    "check:promotion": "node scripts/check-promotion.cjs"
+  },
+  "dependencies": {
+    "@expo/metro-runtime": "~58.0.4",
+    "@expo/vector-icons": "^15.1.1",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "axios": "^1.13.2",
+    "expo": "~58.0.24",
+    "expo-image-picker": "~58.0.0",
+    "expo-secure-store": "~58.0.0",
+    "expo-status-bar": "~58.0.5",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-native": "0.88.1",
+    "react-native-web": "~0.21.4",
+    "react-native-safe-area-context": "~5.11.1"
+  },
+  "overrides": { "@expo/fingerprint": { "minimatch": "^11.0.1" } },
+  "devDependencies": {
+    "@types/react": "~19.2.2",
+    "node": "^22.22.0",
+    "typescript": "~5.9.2"
+  }
+}

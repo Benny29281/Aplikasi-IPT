@@ -1,0 +1,14 @@
+const { spawnSync } = require('node:child_process');
+const fs = require('node:fs');
+const path = require('node:path');
+const root = path.resolve(__dirname, '..');
+const result = spawnSync(process.execPath, [path.join(root,'node_modules/expo/bin/cli'),'export','--platform','web'], {cwd:root,stdio:'inherit',env:{...process.env,EXPO_OFFLINE:'1'}});
+if(result.status !== 0) process.exit(result.status || 1);
+const file=path.join(root,'dist/index.html');
+let html=fs.readFileSync(file,'utf8').replace('<html lang="en">','<html lang="id">');
+const assets=path.join(root,'dist/assets/assets');
+const logo=fs.existsSync(assets)?fs.readdirSync(assets).find(name=>/^logo\.[a-f0-9]+\.png$/.test(name)):null;
+if(logo)html=html.replace('</head>',`<link rel="preload" as="image" href="/assets/assets/${logo}"/></head>`);
+html=html.replace('</head>','<meta name="description" content="Jelajahi koleksi kamera instan, film Instax, dan teknologi di IPT Store — Indonesia Pacific Trade."/><meta name="theme-color" content="#285BC0"/></head>');
+fs.writeFileSync(file,html);
+console.log('IPT Store web siap.');

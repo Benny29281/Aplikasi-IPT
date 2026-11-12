@@ -1,0 +1,11 @@
+﻿{
+  "expo": {
+    "name": "IPT Store", "slug": "ipt-store", "version": "1.0.0", "orientation": "default", "scheme": "iptstore",
+    "userInterfaceStyle": "light", "icon": "./assets/logo.png",
+    "ios": { "supportsTablet": true, "bundleIdentifier": "id.ipt.store" },
+    "android": { "package": "id.ipt.store" },
+    "web": { "bundler": "metro", "name": "IPT Store | Indonesia Pacific Trade", "favicon": "./assets/logo.png" },
+    "plugins": ["expo-secure-store", ["expo-image-picker", { "photosPermission": "Pilih foto untuk bukti pembayaran dan verifikasi usia." }]]
+  }
+}
+
